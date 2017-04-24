@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package weathermonitor;
+package weatherserver;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  *
  * @author THISURA THEJITH
  */
-public class Weathermonitor {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+public interface WeatherRMI extends Remote{
+        public String getMeasurement() throws RemoteException;
 }
