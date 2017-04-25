@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AirpressureSensor extends Thread{
      
-    private final long fiveMinsInMillis=1000;//300000; 
+    private final long fiveMinsInMillis=300000; 
     private String location;
     private String serverName;
     private String type;
@@ -74,12 +74,5 @@ public class AirpressureSensor extends Thread{
         return currentAirpressure;
     }
     
-    public static void main(String[] args) {
-        String serverName = "localhost";
-        int port = 6066;
-        Thread colombo = new AirpressureSensor(serverName, port,"colombo");
-        colombo.start();
-        Thread galle = new AirpressureSensor(serverName, port,"galle");
-        galle.start();
-    }
+    
 }

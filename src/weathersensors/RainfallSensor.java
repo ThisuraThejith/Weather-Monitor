@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class RainfallSensor extends Thread{
     
-    private final long fiveMinsInMillis=1000;//300000; 
+    private final long fiveMinsInMillis=300000; 
     private String location;
     private String serverName;
     private String type;
@@ -74,12 +74,5 @@ public class RainfallSensor extends Thread{
         return currentRainfall;
     }
     
-    public static void main(String[] args) {
-        String serverName = "localhost";
-        int port = 6066;
-        Thread colombo = new RainfallSensor(serverName, port,"colombo");
-        colombo.start();
-        Thread galle = new RainfallSensor(serverName, port,"galle");
-        galle.start();
-    }
+    
 }

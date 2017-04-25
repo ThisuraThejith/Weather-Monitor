@@ -74,12 +74,5 @@ public class TemperatureSensor extends Thread {
         return currentTemperature;
     }
     
-    public static void main(String[] args) {
-        String serverName = "localhost";
-        int port = 6066;
-        Thread colombo = new TemperatureSensor(serverName, port,"colombo");
-        colombo.start();
-        Thread galle = new TemperatureSensor(serverName, port,"galle");
-        galle.start();
-    }
+    
 }

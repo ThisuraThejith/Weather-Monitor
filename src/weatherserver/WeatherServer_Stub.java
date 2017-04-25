@@ -9,13 +9,17 @@ public final class WeatherServer_Stub
 {
     private static final long serialVersionUID = 2;
     
-    private static java.lang.reflect.Method $method_getRainfall_0;
-    private static java.lang.reflect.Method $method_getTemp_1;
+    private static java.lang.reflect.Method $method_getAirpressure_0;
+    private static java.lang.reflect.Method $method_getHumidity_1;
+    private static java.lang.reflect.Method $method_getRainfall_2;
+    private static java.lang.reflect.Method $method_getTemp_3;
     
     static {
 	try {
-	    $method_getRainfall_0 = weatherserver.WeatherRMI.class.getMethod("getRainfall", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
-	    $method_getTemp_1 = weatherserver.WeatherRMI.class.getMethod("getTemp", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getAirpressure_0 = weatherserver.WeatherRMI.class.getMethod("getAirpressure", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getHumidity_1 = weatherserver.WeatherRMI.class.getMethod("getHumidity", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getRainfall_2 = weatherserver.WeatherRMI.class.getMethod("getRainfall", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getTemp_3 = weatherserver.WeatherRMI.class.getMethod("getTemp", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
 	} catch (java.lang.NoSuchMethodException e) {
 	    throw new java.lang.NoSuchMethodError(
 		"stub class initialization failed");
@@ -29,12 +33,44 @@ public final class WeatherServer_Stub
     
     // methods from remote interfaces
     
+    // implementation of getAirpressure(String, String)
+    public java.lang.String getAirpressure(java.lang.String $param_String_1, java.lang.String $param_String_2)
+	throws java.rmi.RemoteException
+    {
+	try {
+	    Object $result = ref.invoke(this, $method_getAirpressure_0, new java.lang.Object[] {$param_String_1, $param_String_2}, -5354573068665369498L);
+	    return ((java.lang.String) $result);
+	} catch (java.lang.RuntimeException e) {
+	    throw e;
+	} catch (java.rmi.RemoteException e) {
+	    throw e;
+	} catch (java.lang.Exception e) {
+	    throw new java.rmi.UnexpectedException("undeclared checked exception", e);
+	}
+    }
+    
+    // implementation of getHumidity(String, String)
+    public java.lang.String getHumidity(java.lang.String $param_String_1, java.lang.String $param_String_2)
+	throws java.rmi.RemoteException
+    {
+	try {
+	    Object $result = ref.invoke(this, $method_getHumidity_1, new java.lang.Object[] {$param_String_1, $param_String_2}, -1121861635342285776L);
+	    return ((java.lang.String) $result);
+	} catch (java.lang.RuntimeException e) {
+	    throw e;
+	} catch (java.rmi.RemoteException e) {
+	    throw e;
+	} catch (java.lang.Exception e) {
+	    throw new java.rmi.UnexpectedException("undeclared checked exception", e);
+	}
+    }
+    
     // implementation of getRainfall(String, String)
     public java.lang.String getRainfall(java.lang.String $param_String_1, java.lang.String $param_String_2)
 	throws java.rmi.RemoteException
     {
 	try {
-	    Object $result = ref.invoke(this, $method_getRainfall_0, new java.lang.Object[] {$param_String_1, $param_String_2}, 2516340935519547326L);
+	    Object $result = ref.invoke(this, $method_getRainfall_2, new java.lang.Object[] {$param_String_1, $param_String_2}, 2516340935519547326L);
 	    return ((java.lang.String) $result);
 	} catch (java.lang.RuntimeException e) {
 	    throw e;
@@ -50,7 +86,7 @@ public final class WeatherServer_Stub
 	throws java.rmi.RemoteException
     {
 	try {
-	    Object $result = ref.invoke(this, $method_getTemp_1, new java.lang.Object[] {$param_String_1, $param_String_2}, 2081639102554030655L);
+	    Object $result = ref.invoke(this, $method_getTemp_3, new java.lang.Object[] {$param_String_1, $param_String_2}, 2081639102554030655L);
 	    return ((java.lang.String) $result);
 	} catch (java.lang.RuntimeException e) {
 	    throw e;
