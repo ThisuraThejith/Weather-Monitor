@@ -11,15 +11,19 @@ public final class WeatherServer_Stub
     
     private static java.lang.reflect.Method $method_getAirpressure_0;
     private static java.lang.reflect.Method $method_getHumidity_1;
-    private static java.lang.reflect.Method $method_getRainfall_2;
-    private static java.lang.reflect.Method $method_getTemp_3;
+    private static java.lang.reflect.Method $method_getNumberOfStations_2;
+    private static java.lang.reflect.Method $method_getNumberofSensors_3;
+    private static java.lang.reflect.Method $method_getRainfall_4;
+    private static java.lang.reflect.Method $method_getTemp_5;
     
     static {
 	try {
 	    $method_getAirpressure_0 = weatherserver.WeatherRMI.class.getMethod("getAirpressure", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
 	    $method_getHumidity_1 = weatherserver.WeatherRMI.class.getMethod("getHumidity", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
-	    $method_getRainfall_2 = weatherserver.WeatherRMI.class.getMethod("getRainfall", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
-	    $method_getTemp_3 = weatherserver.WeatherRMI.class.getMethod("getTemp", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getNumberOfStations_2 = weatherserver.WeatherRMI.class.getMethod("getNumberOfStations", new java.lang.Class[] {});
+	    $method_getNumberofSensors_3 = weatherserver.WeatherRMI.class.getMethod("getNumberofSensors", new java.lang.Class[] {});
+	    $method_getRainfall_4 = weatherserver.WeatherRMI.class.getMethod("getRainfall", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
+	    $method_getTemp_5 = weatherserver.WeatherRMI.class.getMethod("getTemp", new java.lang.Class[] {java.lang.String.class, java.lang.String.class});
 	} catch (java.lang.NoSuchMethodException e) {
 	    throw new java.lang.NoSuchMethodError(
 		"stub class initialization failed");
@@ -65,12 +69,44 @@ public final class WeatherServer_Stub
 	}
     }
     
+    // implementation of getNumberOfStations()
+    public int getNumberOfStations()
+	throws java.rmi.RemoteException
+    {
+	try {
+	    Object $result = ref.invoke(this, $method_getNumberOfStations_2, null, 3795403704050515405L);
+	    return ((java.lang.Integer) $result).intValue();
+	} catch (java.lang.RuntimeException e) {
+	    throw e;
+	} catch (java.rmi.RemoteException e) {
+	    throw e;
+	} catch (java.lang.Exception e) {
+	    throw new java.rmi.UnexpectedException("undeclared checked exception", e);
+	}
+    }
+    
+    // implementation of getNumberofSensors()
+    public int getNumberofSensors()
+	throws java.rmi.RemoteException
+    {
+	try {
+	    Object $result = ref.invoke(this, $method_getNumberofSensors_3, null, 7321107150239775665L);
+	    return ((java.lang.Integer) $result).intValue();
+	} catch (java.lang.RuntimeException e) {
+	    throw e;
+	} catch (java.rmi.RemoteException e) {
+	    throw e;
+	} catch (java.lang.Exception e) {
+	    throw new java.rmi.UnexpectedException("undeclared checked exception", e);
+	}
+    }
+    
     // implementation of getRainfall(String, String)
     public java.lang.String getRainfall(java.lang.String $param_String_1, java.lang.String $param_String_2)
 	throws java.rmi.RemoteException
     {
 	try {
-	    Object $result = ref.invoke(this, $method_getRainfall_2, new java.lang.Object[] {$param_String_1, $param_String_2}, 2516340935519547326L);
+	    Object $result = ref.invoke(this, $method_getRainfall_4, new java.lang.Object[] {$param_String_1, $param_String_2}, 2516340935519547326L);
 	    return ((java.lang.String) $result);
 	} catch (java.lang.RuntimeException e) {
 	    throw e;
@@ -86,7 +122,7 @@ public final class WeatherServer_Stub
 	throws java.rmi.RemoteException
     {
 	try {
-	    Object $result = ref.invoke(this, $method_getTemp_3, new java.lang.Object[] {$param_String_1, $param_String_2}, 2081639102554030655L);
+	    Object $result = ref.invoke(this, $method_getTemp_5, new java.lang.Object[] {$param_String_1, $param_String_2}, 2081639102554030655L);
 	    return ((java.lang.String) $result);
 	} catch (java.lang.RuntimeException e) {
 	    throw e;

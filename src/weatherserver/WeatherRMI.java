@@ -17,4 +17,6 @@ public interface WeatherRMI extends Remote{
         public String getRainfall(String location, String clientLocation) throws RemoteException;
         public String getAirpressure(String location, String clientLocation) throws RemoteException;
         public String getHumidity(String location, String clientLocation) throws RemoteException;
+        public int getNumberofSensors() throws RemoteException;
+        public int getNumberOfStations() throws RemoteException;
 }

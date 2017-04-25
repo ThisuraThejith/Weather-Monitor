@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import weatherclient.MonitoringStation;
 import weatherclient.StationRMI;
+import weathersensors.TemperatureSensor;
 
 /**
  *
@@ -35,11 +36,14 @@ import weatherclient.StationRMI;
 public class WeatherServer extends UnicastRemoteObject implements Runnable,WeatherRMI {
 
     private Map<String, Socket> sensorClients;
-    private List<MonitoringStation> stations;
+    private Map<String, ServerWorkerThread> workers;
+    private Map<String,String> stations;
     private ServerSocket serverSocket;
 
     public WeatherServer(int port) throws IOException {
         sensorClients = new HashMap<String, Socket>();
+        stations = new HashMap<String,String>();
+        workers = new HashMap<String, ServerWorkerThread>();
         serverSocket = new ServerSocket(port);
         serverSocket.setSoTimeout(100000);
     }
@@ -47,27 +51,8 @@ public class WeatherServer extends UnicastRemoteObject implements Runnable,Weath
     public void run() {
         while (true) {
             try {
-                Socket server = serverSocket.accept();
-                ObjectInputStream in = new ObjectInputStream(server.getInputStream());
-                try {
-                    ArrayList<String> valueList = ((ArrayList<String>) in.readObject());
-                    String location = valueList.get(0);
-                    String type = valueList.get(1);
-                    double measurement = Double.parseDouble(valueList.get(2));
-                    if ("TEMP".equals(type)) {
-                        if (measurement > 30) {
-                           sendAlertToStations("Temperature above 30 at" + location);
-                        } else if (measurement < 20) {
-                           sendAlertToStations("Temperature below 20 at" + location);
-                        }
-                    }
-                    System.out.println("Measurement is " + location+"_"+type + " " + measurement);
-                    sensorClients.put(location+"_"+type, server);
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-                server.close();
-
+                Socket socket = serverSocket.accept();
+                new ServerWorkerThread(socket,this).start();
             } catch (SocketTimeoutException s) {
                 System.out.println("Socket timed out!");
                 break;
@@ -77,7 +62,28 @@ public class WeatherServer extends UnicastRemoteObject implements Runnable,Weath
             }
         }
     }
+    
+    
+    public void addWorker(String location, String type, ServerWorkerThread worker) {
+        workers.put(location + "_" + type, worker);
+    }
+    
+    public void addSensor(String location, String type, Socket socket) {
+        sensorClients.put(location + "_" + type, socket);
+    }
 
+    public void removeSensor(String location, String type){
+       sensorClients.remove(location + "_" + type);
+    }
+    
+    public void addStation(String location){
+        stations.put(location, location);
+    }
+    
+    public void removeStation(String location){
+        stations.remove(location);
+    }
+    
     public void bindRMIServer() {
         try {
             Naming.rebind("rmi://localhost:5000/server", this);
@@ -87,38 +93,52 @@ public class WeatherServer extends UnicastRemoteObject implements Runnable,Weath
         }
     }
 
+    
+    /////RMI methods
+    @Override
+    public int getNumberofSensors(){
+       return this.sensorClients.size();
+    }
+    
+    @Override
+    public int getNumberOfStations(){
+       return this.stations.size();
+    }
+    
     @Override
     public String getTemp(String location, String clientLocation) throws RemoteException {
-       Socket sensor = sensorClients.get(location+"_TEMP");
-       
-       return "";
+        addStation(clientLocation);
+        return workers.get(location + "_" + TemperatureSensor.TYPE).getTemp(location, clientLocation);
     }
     
     @Override
     public String getRainfall(String location, String clientLocation) throws RemoteException {
-       Socket sensor = sensorClients.get(location+"_RAIN");
+       addStation(clientLocation);
        return "";
     }
     
     @Override
     public String getAirpressure(String location, String clientLocation) throws RemoteException {
-       Socket sensor = sensorClients.get(location+"_AIRPRESS");
+       addStation(clientLocation);
        return "";
     }
     
     @Override
     public String getHumidity(String location, String clientLocation) throws RemoteException {
-       Socket sensor = sensorClients.get(location+"_HUMIDITY");
+       addStation(clientLocation);
        return "";
     }
     
-    private void sendAlertToStations(String message) {
+    public void sendAlertToStations(String message) {
         String[] names;
         try {
             names = Naming.list("rmi://localhost:5000/station/");
             for (String name : names) {
-                StationRMI station = (StationRMI) Naming.lookup(name);
-                station.alert(message);
+                System.out.println("Station Name :"+name);
+                if (name.contains("station")) {
+                    StationRMI station = (StationRMI) Naming.lookup(name);
+                    station.alert(message);
+                }
             }
         } catch (RemoteException ex) {
             Logger.getLogger(WeatherServer.class.getName()).log(Level.SEVERE, null, ex);

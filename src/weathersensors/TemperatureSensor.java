@@ -18,10 +18,11 @@ import java.util.logging.Logger;
  */
 public class TemperatureSensor extends Thread {
  
+    public static final String TYPE = "TEMP";
     private final long fiveMinsInMillis=1000;//300000; 
     private String location;
     private String serverName;
-    private String type;
+    
     private int port;
     private double currentTemperature;
 
@@ -29,7 +30,6 @@ public class TemperatureSensor extends Thread {
         this.serverName = serverName;
         this.port = port;
         this.location = location;
-        this.type = "TEMP";
     }
 
     @Override
@@ -39,9 +39,9 @@ public class TemperatureSensor extends Thread {
             try {
                 if (counter == 12) {
                     List<String> source = new ArrayList<String>();
-                    source.add(location+"_"+type);
-                    source.add(type);
-                    currentTemperature = Math.random() * 30;
+                    source.add(location);
+                    source.add(TYPE);
+                    currentTemperature = Math.random() * 40;
                     source.add(Double.toString(currentTemperature));
                     Socket client = new Socket(serverName, port);
                     OutputStream outToServer = client.getOutputStream();
