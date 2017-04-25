@@ -13,5 +13,8 @@ import java.rmi.RemoteException;
  * @author THISURA THEJITH
  */
 public interface WeatherRMI extends Remote{
-        public String getMeasurement() throws RemoteException;
+        public String getTemp(String location, String clientLocation) throws RemoteException;
+        public String getRainfall(String location, String clientLocation) throws RemoteException;
+        public String getAirpressure(String location, String clientLocation) throws RemoteException;
+        public String getHumidity(String location, String clientLocation) throws RemoteException;
 }

@@ -5,31 +5,31 @@
  */
 package weathersensors;
 
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author THISURA THEJITH
  */
-public class TemperatureSensor extends Thread {
- 
+public class AirpressureSensor extends Thread{
+     
     private final long fiveMinsInMillis=1000;//300000; 
     private String location;
     private String serverName;
     private String type;
     private int port;
-    private double currentTemperature;
+    private double currentAirpressure;
 
-    public TemperatureSensor(String serverName, int port, String location) {
+    public AirpressureSensor(String serverName, int port, String location) {
         this.serverName = serverName;
         this.port = port;
         this.location = location;
-        this.type = "TEMP";
+        this.type = "AIRPRESS";
     }
 
     @Override
@@ -41,15 +41,15 @@ public class TemperatureSensor extends Thread {
                     List<String> source = new ArrayList<String>();
                     source.add(location+"_"+type);
                     source.add(type);
-                    currentTemperature = Math.random() * 30;
-                    source.add(Double.toString(currentTemperature));
+                    currentAirpressure = Math.random() * 30;
+                    source.add(Double.toString(currentAirpressure));
                     Socket client = new Socket(serverName, port);
                     OutputStream outToServer = client.getOutputStream();
                     ObjectOutputStream out = new ObjectOutputStream(outToServer);
                     out.writeObject(source);
                     counter = 1;
                 } else {
-                    currentTemperature = Math.random() * 30;
+                    currentAirpressure = Math.random() * 30;
                     counter++;
                 }
                 try {
@@ -70,16 +70,16 @@ public class TemperatureSensor extends Thread {
         return location;
     }
 
-    public double getCurrentTemperature() {
-        return currentTemperature;
+    public double getCurrentAirpressure() {
+        return currentAirpressure;
     }
     
     public static void main(String[] args) {
         String serverName = "localhost";
         int port = 6066;
-        Thread colombo = new TemperatureSensor(serverName, port,"colombo");
+        Thread colombo = new AirpressureSensor(serverName, port,"colombo");
         colombo.start();
-        Thread galle = new TemperatureSensor(serverName, port,"galle");
+        Thread galle = new AirpressureSensor(serverName, port,"galle");
         galle.start();
     }
 }
